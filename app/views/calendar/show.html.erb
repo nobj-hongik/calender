@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-md-12 text-center">
+    <div class="well controls">
+      <%= link_to calendar_path(date: @date - 1.month), class: "btn btn-default" do %>
+        <i class="glyphicon glyphicon-backward">prev</i>
+      <% end %>
+      <%= "#{@date.strftime("%B")} #{@date.year}" %>
+      <%= link_to calendar_path(date: @date + 1.month), class: "btn btn-default" do %>
+        <i class="glyphicon glyphicon-forward">next</i>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <%= calendar @date do |date| %>
+      <%= date.day %>
+     
+    <ul> 
+    <% @eventsbydate.each do |t| %> 
+      <% if t.start_time == date %>
+            <li>
+              <%= link_to(t.name, t) %>
+            </li> 
+
+      <% end %>
+
+    </ul> 
+  <% end %>
+
+  </div>
+</div>
+
+      <% end %>
+
+<div>
+  <% if user_signed_in? %>
+  <%= link_to "logout", destroy_user_session_path, method: :delete %>
+  <% else %>
+  <%= link_to "login", new_user_session_path, method: :get %>
+  <%= link_to "sign_up", new_user_registration_path, method: :get %>
+  <% end %>
+
+</div>
